@@ -1,65 +1,68 @@
-(function () {
-	const blogSlider = () => {
-		$(".section-main-blog").each(function () {
-			if ($(this).hasClass("slider_started")) {
-				return "";
-			}
-			$(this).addClass("slider_started");
-			const box = $(this).find(".blog-slider");
-			const id = box.data("id");
-			const autoplay = box.data("autoplay");
-			const isLoop = box.data("loop");
-			const stopAutoplay = box.data("stop-autoplay");
-			const delay = box.data("delay") * 1000;
-			const slideSpeed = box.data("speed") * 1000;
-			const slideCount = box.data("slide-count");
+(() => {
+	const initBlogSlider = (section) => {
+		if (!section || section.dataset.blogSliderInitialized === "true") return;
 
-			let autoplayParam;
-			if (autoplay && slideCount > 1) {
-				autoplayParam = {
-					autoplay: {
-						delay: delay,
+		const slider = section.querySelector(".blog-slider__swiper");
+		const settings = section.querySelector(".blog-slider");
+
+		if (!slider || !settings || typeof window.Swiper === "undefined") return;
+
+		const slideCount = Number(settings.dataset.slideCount) || 0;
+		if (slideCount < 1) return;
+
+		const autoplayEnabled = settings.dataset.autoplay === "true" && slideCount > 1;
+		const loopEnabled = settings.dataset.loop === "true" && slideCount > 1;
+		const stopAutoplay = settings.dataset.stopAutoplay === "true";
+		const delay = (Number(settings.dataset.delay) || 3) * 1000;
+		const speed = (Number(settings.dataset.speed) || 1.5) * 1000;
+		const nextButton = section.querySelector(".swiper-button-next");
+		const previousButton = section.querySelector(".swiper-button-prev");
+		const pagination = section.querySelector(".swiper-pagination");
+
+		new window.Swiper(slider, {
+			speed,
+			loop: loopEnabled,
+			keyboard: {
+				enabled: true,
+			},
+			allowTouchMove: true,
+			autoplay: autoplayEnabled
+				? {
+						delay,
 						pauseOnMouseEnter: stopAutoplay,
 						disableOnInteraction: false,
-					},
-				};
-			} else {
-				autoplayParam = {
-					autoplay: false,
-				};
-			}
-
-			const commonParams = {
-				speed: slideSpeed,
-				loop: isLoop && slideCount > 1,
-				keyboard: true,
-				allowTouchMove: true,
-				...autoplayParam,
-			};
-
-			const swiperOverlayParams = {
-				centeredSlides: false,
-				navigation: {
-					nextEl: `#${id} .swiper-button-next`,
-					prevEl: `#${id} .swiper-button-prev`,
-				},
-				pagination: {
-					el: `#${id} .swiper-pagination`,
-					clickable: true,
-				},
-			};
-
-			const swiperOverlay = new Swiper(`#${id} .blog-slider__swiper`, {
-				...commonParams,
-				...swiperOverlayParams,
-			});
+					}
+				: false,
+			navigation: nextButton && previousButton
+				? {
+						nextEl: nextButton,
+						prevEl: previousButton,
+					}
+				: undefined,
+			pagination: pagination
+				? {
+						el: pagination,
+						type: "fraction",
+					}
+				: undefined,
 		});
+
+		section.dataset.blogSliderInitialized = "true";
 	};
 
-	document.addEventListener("DOMContentLoaded", function () {
-		blogSlider();
-		document.addEventListener("shopify:section:load", function () {
-			blogSlider();
-		});
+	const initAllBlogSliders = (root = document) => {
+		if (root.matches?.(".section-main-blog")) initBlogSlider(root);
+		root.querySelectorAll?.(".section-main-blog").forEach(initBlogSlider);
+	};
+
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", () => initAllBlogSliders());
+	} else {
+		initAllBlogSliders();
+	}
+	window.addEventListener("load", () => initAllBlogSliders());
+
+	document.addEventListener("shopify:section:load", (event) => {
+		initAllBlogSliders(event.target);
 	});
 })();

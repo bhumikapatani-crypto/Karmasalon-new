@@ -212,6 +212,14 @@
         "margin_bottom": "m"
       }
     },
+    "collection_buying_guide": {
+      "type": "collection-seo-content",
+      "settings": {
+        "heading": "Buying guide and frequently asked questions",
+        "padding_top": "m",
+        "padding_bottom": "m"
+      }
+    },
     "collapsible_content_FenANY": {
       "type": "collapsible-content",
       "blocks": {
@@ -287,6 +295,7 @@
     "banner",
     "categories-list",
     "product-grid",
+    "collection_buying_guide",
     "collapsible_content_FenANY",
     "rich_text_xADfLr"
   ]

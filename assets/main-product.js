@@ -101,6 +101,25 @@
 
 	document.addEventListener("scroll", () => revealPopup());
 
+	document.addEventListener("click", (event) => {
+		const button = event.target.closest("[data-product-tab-button]");
+		if (!button) return;
+
+		const tabs = button.closest("[data-product-tabs]");
+		if (!tabs) return;
+
+		tabs.querySelectorAll("[data-product-tab-button]").forEach((tabButton) => {
+			const isActive = tabButton === button;
+			tabButton.classList.toggle("is-active", isActive);
+			tabButton.setAttribute("aria-selected", String(isActive));
+			tabButton.setAttribute("tabindex", isActive ? "0" : "-1");
+		});
+
+		tabs.querySelectorAll('[role="tabpanel"]').forEach((panel) => {
+			panel.hidden = panel.id !== button.getAttribute("aria-controls");
+		});
+	});
+
 	document.addEventListener("shopify:section:load", function () {
 		initProductAccordion();
 		setTotalFreeShipping();

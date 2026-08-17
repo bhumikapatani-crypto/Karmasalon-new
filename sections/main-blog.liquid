@@ -43,6 +43,8 @@
 			slider_heading_size: section.settings.slider_heading_size,
 			button_label: section.settings.button_label,
 			button_style: section.settings.button_style,
+			show_arrows: section.settings.show_arrows,
+			show_bullets: section.settings.show_bullets,
 			loop: section.settings.is_loop
 		%}
 	{% endif %}
@@ -501,6 +503,14 @@
 					"info": "t:sections.main-blog.blocks.info"
 				}
 			]
+		}
+	],
+	"enabled_on": {
+		"templates": ["blog"]
+	},
+	"presets": [
+		{
+			"name": "t:sections.main-blog.name"
 		}
 	]
 }

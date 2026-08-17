@@ -24,13 +24,13 @@
   gap: 0.6rem;
 }
 @media screen and (min-width: 990px) {
-  .collection-hero__text-wrapper {
+  /* .collection-hero__text-wrapper {
     width: min(59.2rem, 50%);
-  }
+  } */
 }
 .collection-hero__description {
   color: rgb(var(--color-foreground-secondary));
-  max-width: 54rem;
+  /* max-width: 54rem; */
 }
 .collection-hero__description p {
   color: rgb(var(--color-foreground-secondary));

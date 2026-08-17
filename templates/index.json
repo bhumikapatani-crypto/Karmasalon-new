@@ -521,7 +521,7 @@
         "text_position": "bottom",
         "is_animated_heading": true,
         "heading_animation_speed": 150,
-        "margin_top": "no-indent",
+        "margin_top": "m",
         "margin_bottom": "m"
       }
     },

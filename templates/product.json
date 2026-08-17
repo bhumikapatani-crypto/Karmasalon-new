@@ -88,13 +88,21 @@
         "description_btfzQx": {
           "type": "description",
           "settings": {
-            "description": ""
+            "description": "",
+            "button_1_label": "Download Assembly Instructions",
+            "button_1_link": "https://cdn.shopify.com/s/files/1/0997/5804/7513/files/Karma_Salon_Chair_Assembly_Instructions.pdf?v=1783769890",
+            "button_2_label": "Product Guide & Care",
+            "button_2_link": "shopify://pages/care-guide",
+            "button_3_label": "Warranty",
+            "button_3_link": "shopify://pages/warranty"
           }
         },
         "dropdown_information_t4HAkU": {
           "type": "dropdown_information",
+          "disabled": true,
           "settings": {
             "button_function": "popup",
+            "show_as_tab": true,
             "heading": "Specs",
             "page": "",
             "description": "{{ product.metafields.custom.specs | metafield_tag }}",
@@ -106,8 +114,10 @@
         },
         "dropdown_information_iBnKzn": {
           "type": "dropdown_information",
+          "disabled": true,
           "settings": {
             "button_function": "popup",
+            "show_as_tab": true,
             "heading": "Dimensions",
             "page": "",
             "description": "{{ product.metafields.custom.dimensions | metafield_tag }}",
@@ -119,8 +129,10 @@
         },
         "dropdown_information_HzbCqk": {
           "type": "dropdown_information",
+          "disabled": true,
           "settings": {
             "button_function": "popup",
+            "show_as_tab": false,
             "heading": "Warranty",
             "page": "",
             "description": "{{ product.metafields.custom.warranty | metafield_tag }}",
@@ -132,8 +144,10 @@
         },
         "dropdown_information_tJxYyp": {
           "type": "dropdown_information",
+          "disabled": true,
           "settings": {
             "button_function": "popup",
+            "show_as_tab": false,
             "heading": "Assembly Instructions",
             "page": "",
             "description": "",
@@ -300,6 +314,69 @@
         "margin_bottom": "m"
       }
     },
+    "product_specifications": {
+      "type": "product-specifications",
+      "settings": {
+        "heading": "",
+        "heading_size": "h1",
+        "description": "",
+        "show_category": true,
+        "use_featured_image": true,
+        "show_image_mobile": true,
+        "image_position": "left",
+        "image_ratio": "landscape",
+        "image_fit": "contain",
+        "image_width": 42,
+        "image_max_height": 560,
+        "image_padding": 0,
+        "image_radius": 0,
+        "content_position": "center",
+        "column_gap": 48,
+        "label_width": 42,
+        "row_padding": 18,
+        "table_radius": 14,
+        "section_background": "#ffffff",
+        "image_background": "#ffffff",
+        "table_background": "#ffffff",
+        "heading_color": "#111111",
+        "text_color": "#262626",
+        "muted_color": "#666666",
+        "border_color": "#e1e1e1",
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "metafield_namespace": "custom",
+        "metafield_key": "specification_table",
+        "category_key": "category_label",
+        "heading_key": "heading",
+        "description_key": "description",
+        "image_key": "image",
+        "rows_key": "rows",
+        "row_label_key": "label",
+        "row_value_key": "value"
+      }
+    },
+    "image_with_text_PdzBJy": {
+      "type": "image-with-text",
+      "custom_css": [
+        ".image-with-text__description {text-align: justify;}",
+        ".image-with-text__title.h1 {text-align: justify;}"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "color_scheme": "",
+        "image_ratio": "1/1",
+        "image": "{{ product.metafields.custom.dimensionss.value.image.value }}",
+        "image_parallax": false,
+        "heading": "{{ product.metafields.custom.dimensionss.value.heading.value }}",
+        "text": "{{ product.metafields.custom.dimensionss.value.description | metafield_tag }}",
+        "image_size": "l",
+        "button_label": "",
+        "button_link": "",
+        "button_style": "tertiary",
+        "margin_top": "l",
+        "margin_bottom": "l"
+      }
+    },
     "product-recommendations": {
       "type": "product-recommendations",
       "settings": {
@@ -398,6 +475,8 @@
     "main-product",
     "image_slider_yGqhPY",
     "card_grid_JY7TNc",
+    "product_specifications",
+    "image_with_text_PdzBJy",
     "product-recommendations",
     "collapsible_content_eJYy7a",
     "rich_text_DcYKmb"
