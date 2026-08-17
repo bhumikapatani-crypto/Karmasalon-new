@@ -1451,6 +1451,41 @@
                   </modal-dialog>
                 </div>
 
+              {%- when 'description' -%}
+                <div class="product__description-block" {{ block.shopify_attributes }}>
+                  {% if block.settings.description != blank or product.description != blank %}
+                    <div class="product__description rte body-large collapsed">
+                      {% if block.settings.description != blank %}
+                        {{- block.settings.description | escape -}}
+                      {% else %}
+                        {{- product.description -}}
+                      {% endif %}
+                    </div>
+                    <button class="read-more-btn button button--simple" style="display: none;">
+                      <span>
+                        <span class="more">{{ 'products.product.read_more' | t }}</span>
+                        <span class="less">{{ 'products.product.read_less' | t }}</span>
+                      </span>
+                    </button>
+                  {% endif %}
+
+                  <div class="product__description-buttons">
+                    {%- for index in (1..3) -%}
+                      {%- liquid
+                        assign label_key = 'button_' | append: index | append: '_label'
+                        assign link_key = 'button_' | append: index | append: '_link'
+                        assign button_label = block.settings[label_key]
+                        assign button_link = block.settings[link_key]
+                      -%}
+                      {% if button_label != blank %}
+                        <a class="product__description-button focus-inset" href="{{ button_link | default: '#' }}" target="_blank" rel="noopener noreferrer">
+                          {{ button_label | escape }}
+                        </a>
+                      {% endif %}
+                    {%- endfor -%}
+                  </div>
+                </div>
+
               {%- when '@app' -%}
                 {% assign app_name = block.id | slice: 0, 30 %}
                 {% if app_name == "judge_me_reviews_review_widget" %}
@@ -1491,27 +1526,44 @@
             <span>{{ product.title }}</span>
           </nav>
         {% endif %}
+      {%- assign product_tab_count = 0 -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'dropdown_information' and block.settings.show_as_tab -%}
+          {%- assign product_tab_count = product_tab_count | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {% if product_tab_count > 0 %}
+        <div class="product-tabs" data-product-tabs>
+          <div class="product-tabs__navigation" role="tablist" aria-label="Product information">
+            {%- assign product_tab_index = 0 -%}
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'dropdown_information' and block.settings.show_as_tab -%}
+                <button class="product-tabs__button{% if product_tab_index == 0 %} is-active{% endif %}" id="ProductTab-{{ block.id }}" type="button" role="tab" aria-selected="{% if product_tab_index == 0 %}true{% else %}false{% endif %}" aria-controls="ProductTabPanel-{{ block.id }}" tabindex="{% if product_tab_index == 0 %}0{% else %}-1{% endif %}" data-product-tab-button>
+                  {{ block.settings.heading | escape }}
+                </button>
+                {%- assign product_tab_index = product_tab_index | plus: 1 -%}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+          {%- assign product_tab_index = 0 -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'dropdown_information' and block.settings.show_as_tab -%}
+              <div class="product-tabs__panel rte{% if product_tab_index == 0 %} is-active{% endif %}" id="ProductTabPanel-{{ block.id }}" role="tabpanel" aria-labelledby="ProductTab-{{ block.id }}"{% if product_tab_index != 0 %} hidden{% endif %} {{ block.shopify_attributes }}>
+                {% if block.settings.page != blank %}{{ block.settings.page.content }}{% endif %}
+                {% if block.settings.image != blank %}{{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '375, 550, 750, 1100' }}{% endif %}
+                {% if block.settings.description != blank %}{{ block.settings.description }}{% endif %}
+                {% if block.settings.second_image != blank %}{{ block.settings.second_image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '375, 550, 750, 1100' }}{% endif %}
+                {% if block.settings.second_description != blank %}{{ block.settings.second_description }}{% endif %}
+                {% if block.settings.additional_text != blank %}{{ block.settings.additional_text }}{% endif %}
+              </div>
+              {%- assign product_tab_index = product_tab_index | plus: 1 -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {% endif %}
       <div class="product__bottom-info">
         {%- for block in section.blocks -%}
           {%- case block.type -%}
-            {%- when 'description' -%}
-              {% if block.settings.description != blank or product.description != blank %}
-                <div class="product__description rte body-large collapsed" {{ block.shopify_attributes }}>
-                  {% if block.settings.description != blank %}
-                    {{- block.settings.description | escape -}}
-                  {% else %}
-                    {{- product.description -}}
-                  {% endif %}
-                </div>
-                <button class="read-more-btn button button--simple" style="display: none;">
-                  <span>
-                    <span class="more">{{ 'products.product.read_more' | t }}</span>
-                    <span class="less">{{ 'products.product.read_less' | t }}</span>
-                  </span>
-                </button>
-              {% endif %}
-
-
             {%- when 'complementary' -%}
               <product-recommendations
                 class="complementary-products product-recommendations{% if block.settings.show_border_top %} complementary-products--border-top{% endif %}"
@@ -1566,6 +1618,7 @@
                 </div>
               </product-recommendations>
             {%- when 'dropdown_information' -%}
+              {% unless block.settings.show_as_tab %}
               {% if block.settings.button_function == "accordion" %}
                 <div class="about">
                   <div class="about__accordion-item" {{ block.shopify_attributes }}>
@@ -1761,6 +1814,7 @@
                   </modal-dialog>
                 </div>
               {% endif %}
+              {% endunless %}
               
           {%- endcase -%}
         {%- endfor -%}
@@ -2200,6 +2254,43 @@
           "id": "description",
           "label": "t:sections.all.text.label",
           "info": "t:sections.main-product.blocks.description.settings.text.info"
+        },
+        {
+          "type": "header",
+          "content": "Buttons below description"
+        },
+        {
+          "type": "text",
+          "id": "button_1_label",
+          "default": "Download Assembly Instructions",
+          "label": "Button 1 label"
+        },
+        {
+          "type": "url",
+          "id": "button_1_link",
+          "label": "Button 1 link"
+        },
+        {
+          "type": "text",
+          "id": "button_2_label",
+          "default": "Product Guide & Care",
+          "label": "Button 2 label"
+        },
+        {
+          "type": "url",
+          "id": "button_2_link",
+          "label": "Button 2 link"
+        },
+        {
+          "type": "text",
+          "id": "button_3_label",
+          "default": "Warranty",
+          "label": "Button 3 label"
+        },
+        {
+          "type": "url",
+          "id": "button_3_link",
+          "label": "Button 3 link"
         }
       ]
     },
@@ -2402,6 +2493,13 @@
 					"default": "popup",
 					"label": "t:sections.main-product.blocks.dropdown_information.settings.type.label"
 				},
+        {
+          "type": "checkbox",
+          "id": "show_as_tab",
+          "default": false,
+          "label": "Show as product tab",
+          "info": "Displays this block in the responsive tabs below the product."
+        },
         {
           "id": "heading",
           "type": "text",

@@ -23,6 +23,13 @@
           {%- if section.settings.show_collection_description and collection_description != blank -%}
             <div class="collection-hero__description rte">
               {{ collection_description }}
+              {%- if collection.metafields.custom.seo_content != blank -%}
+                <p>
+                  <a href="#collection-buying-guide" class="link underlined-link">
+                    {{ section.settings.buying_guide_link_label | escape }}
+                  </a>
+                </p>
+              {%- endif -%}
             </div>
           {%- endif -%}
         </div>
@@ -68,6 +75,13 @@
       "id": "show_collection_description",
       "default": false,
       "label": "t:sections.main-collection-banner.settings.show_collection_description.label"
+    },
+    {
+      "type": "text",
+      "id": "buying_guide_link_label",
+      "default": "Read our full buying guide",
+      "label": "Buying guide link label",
+      "info": "Shown after the collection description when the custom.seo_content collection metafield has content."
     },
     {
 			"type": "richtext",

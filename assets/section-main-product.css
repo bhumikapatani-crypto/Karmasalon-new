@@ -206,6 +206,70 @@
   max-width: 80rem;
   margin-top: 3.2rem;
 }
+.product-tabs {
+  width: 100%;
+  margin-top: 4rem;
+}
+.product-tabs__navigation {
+  display: flex;
+  gap: 3.6rem;
+  overflow-x: auto;
+  border-bottom: 0.1rem solid rgba(var(--color-border));
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.product-tabs__navigation::-webkit-scrollbar {
+  display: none;
+}
+.product-tabs__button {
+  position: relative;
+  flex: 0 0 auto;
+  padding: 0 0 1.2rem;
+  border: 0;
+  background: transparent;
+  color: rgb(var(--color-foreground-secondary));
+  font: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.product-tabs__button::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -0.1rem;
+  left: 0;
+  height: 0.2rem;
+  background: rgb(var(--color-foreground));
+  transform: scaleX(0);
+  transition: transform var(--duration-default);
+}
+.product-tabs__button.is-active {
+  color: rgb(var(--color-foreground));
+}
+.product-tabs__button.is-active::after {
+  transform: scaleX(1);
+}
+.product-tabs__panel {
+  padding: 2.4rem 0 0;
+}
+.product-tabs__panel[hidden] {
+  display: none;
+}
+.product-tabs__panel img {
+  max-width: 100%;
+  height: auto;
+}
+@media (max-width: 749px) {
+  .product-tabs {
+    margin-top: 3.2rem;
+  }
+  .product-tabs__navigation {
+    gap: 2.4rem;
+  }
+  .product-tabs__panel {
+    padding-top: 2rem;
+  }
+}
 .product .deferred-media__poster-button {
   display: none;
 }
@@ -321,6 +385,31 @@
   position: relative;
   margin: 3.2rem 0;
   max-width: 60rem;
+}
+.product__description-buttons {
+  display: grid;
+  gap: 1.6rem;
+  margin-top: 3.2rem;
+}
+.product__description-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 5.4rem;
+  padding: 1.4rem 2rem;
+  border-radius: 1.4rem;
+  background-color: #000;
+  color: #fff;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  transition: opacity var(--duration-default);
+}
+.product__description-button:hover {
+  color: #fff;
+  opacity: 0.8;
 }
 .product__sku {
   font-size: 1.2rem;

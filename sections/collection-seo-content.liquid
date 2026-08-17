@@ -1,0 +1,96 @@
+{{ 'component-rte.css' | asset_url | stylesheet_tag }}
+{{ 'component-accordion.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  {% render 'section-padding' %}
+
+  #collection-buying-guide .accordion {
+    margin-top: 0;
+  }
+
+  #collection-buying-guide summary {
+    cursor: pointer;
+  }
+
+  #collection-buying-guide summary .icon-caret {
+    flex: 0 0 auto;
+    transition: transform var(--duration-default);
+  }
+
+  #collection-buying-guide details[open] summary .icon-caret {
+    transform: rotate(180deg);
+  }
+
+  #collection-buying-guide .accordion__content {
+    padding-top: 1.5rem;
+  }
+{%- endstyle -%}
+
+{%- assign seo_content = collection.metafields.custom.seo_content -%}
+
+{%- if seo_content != blank -%}
+  <div
+    id="collection-buying-guide"
+    class="collection-seo-content section-{{ section.id }}-padding"
+    style="scroll-margin-top: 2rem;"
+  >
+    <div class="container">
+      <details class="accordion">
+        <summary>
+          <div class="summary__title">
+            <h2 class="accordion__title h3">{{ section.settings.heading | escape }}</h2>
+          </div>
+          {% render 'icon-caret' %}
+        </summary>
+        <div class="accordion__content rte" role="region">
+          {{ seo_content | metafield_tag }}
+        </div>
+      </details>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Collection buying guide",
+  "tag": "section",
+  "class": "collection-buying-guide-section spaced-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Buying guide and frequently asked questions",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "padding_top",
+      "options": [
+        { "value": "no-indent", "label": "None" },
+        { "value": "s", "label": "Small" },
+        { "value": "m", "label": "Medium" },
+        { "value": "l", "label": "Large" }
+      ],
+      "default": "m",
+      "label": "Top padding"
+    },
+    {
+      "type": "select",
+      "id": "padding_bottom",
+      "options": [
+        { "value": "no-indent", "label": "None" },
+        { "value": "s", "label": "Small" },
+        { "value": "m", "label": "Medium" },
+        { "value": "l", "label": "Large" }
+      ],
+      "default": "m",
+      "label": "Bottom padding"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection buying guide"
+    }
+  ]
+}
+{% endschema %}

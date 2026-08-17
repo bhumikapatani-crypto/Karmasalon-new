@@ -15,14 +15,14 @@
         "article_header": {
           "type": "article-header",
           "settings": {
-            "heading_size": "h1",
+            "heading_size": "h3",
             "overlay_opacity": 0.2,
             "blog_show_tags": true,
             "blog_show_image": true,
-            "blog_show_excerpt": true,
+            "blog_show_excerpt": false,
             "blog_show_author": false,
             "blog_show_date": true,
-            "image_ratio": "16/9"
+            "image_ratio": "21/9"
           }
         },
         "content": {
@@ -33,17 +33,18 @@
         },
         "article_footer": {
           "type": "article-footer",
+          "disabled": true,
           "settings": {
             "blog_show_tags": true,
             "blog_show_author": false,
             "blog_show_date": true,
-            "show_share": true,
-            "show_share_twitter": true,
-            "show_share_facebook": true,
-            "show_share_pinterest": true,
+            "show_share": false,
+            "show_share_twitter": false,
+            "show_share_facebook": false,
+            "show_share_pinterest": false,
             "show_share_telegram": false,
             "show_share_reddit": false,
-            "show_share_copy": true
+            "show_share_copy": false
           }
         }
       },
@@ -53,15 +54,14 @@
         "article_footer"
       ],
       "settings": {
-        "layout": "overlay",
+        "layout": "standard",
         "show_comments": true,
-        "margin_top": "no-indent",
+        "margin_top": "m",
         "margin_bottom": "no-indent"
       }
     },
     "featured_blog": {
       "type": "featured-blog",
-      "disabled": true,
       "settings": {
         "blog": "news",
         "post_limit": 6,
@@ -77,7 +77,7 @@
         "enable_swiper": false,
         "show_arrows": true,
         "show_bullets": true,
-        "image_ratio": "16/9",
+        "image_ratio": "21/9",
         "section_heading": "Read Next",
         "section_heading_size": "h2",
         "section_description": "Discover this selection of pieces specially chosen for you.",
@@ -130,6 +130,7 @@
         "info_bBRTMd",
         "info_mrUK3W"
       ],
+      "disabled": true,
       "name": "t:sections.collapsible-content.name",
       "settings": {
         "color_scheme": "",
@@ -148,6 +149,7 @@
     },
     "rich_text_m9UJzY": {
       "type": "rich-text",
+      "disabled": true,
       "name": "t:sections.rich-text.presets.name",
       "settings": {
         "section_layout": "column",
